@@ -3,10 +3,20 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+@app.route('/getWordEmbeddings')
+def getWordEmbeddings():
+    return "Word";
+
+
+@app.route('/getWordToWordSimilarity')
+def getWordToWordSimilarity():
+    return "WordToWord"
+
+
+@app.route('/getSentenceSimilarityMatrix')
+def getSentenceSimilarityMatrix():
+    return "Sentence"
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True, debug=True)
