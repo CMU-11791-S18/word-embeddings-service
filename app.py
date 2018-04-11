@@ -5,6 +5,7 @@ from SimilarityService import SimilarityService
 
 app = Flask(__name__)
 
+
 @app.route('/getWordVector')
 def get_word_embeddings():
     try:

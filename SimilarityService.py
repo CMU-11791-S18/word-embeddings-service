@@ -3,8 +3,8 @@ from gensim.models import KeyedVectors
 
 class SimilarityService:
 
-    def _init_(self):
-        filename = 'GoogleNews-vectors-negative300.bin'
+    def __init__(self):
+        filename = 'PubMed-w2v.bin'
         self.model = KeyedVectors.load_word2vec_format(filename, binary=True)
 
     @classmethod
@@ -23,5 +23,5 @@ class SimilarityService:
     def get_sentence_similarity_matrix(self, s1, s2):
         s1_words = s1.split()
         s2_words = s2.split()
-        return k[[self.get_word_to_word_similarity(w1, w2) for w1 in s1_words] for w2 in s2_words]
+        return [[self.get_word_to_word_similarity(w1, w2) for w1 in s1_words] for w2 in s2_words]
 
