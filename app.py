@@ -7,7 +7,21 @@ from flask import Response
 from flask import request
 from SimilarityService import SimilarityService
 
+
 app = Flask(__name__)
+formatter = logging.Formatter(
+        "[%(levelname)s - %(message)s]"
+)
+logFileName = 'logs/{}.log'.format(datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H_%M'))
+handler = RotatingFileHandler(logFileName, maxBytes=10000000)
+handler.setFormatter(formatter)
+handler.setLevel(logging.DEBUG)
+app.logger.addHandler(handler)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.DEBUG)
+log.addHandler(handler)
+
+print("Started Word Embedding service on port 80...")
 
 
 @app.route('/getWordVector')
