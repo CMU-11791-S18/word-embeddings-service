@@ -71,6 +71,7 @@ def get_sentence_similarity():
 @app.after_request
 def after_request(response):
     app.logger.info(request.method, request.path, request.args)
+    return response
 
 
 if __name__ == '__main__':
