@@ -75,6 +75,8 @@ def after_request(response):
 
 
 if __name__ == '__main__':
+    SimilarityService()
+
     formatter = logging.Formatter(
         "[%(asctime)s] {%(pathname)s} %(levelname)s - %(message)s]"
     )
