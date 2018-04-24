@@ -89,3 +89,4 @@ if __name__ == '__main__':
     log.setLevel(logging.DEBUG)
     log.addHandler(handler)
     app.run(threaded=True)
+    print("Word Embedding Service started on port 80")
