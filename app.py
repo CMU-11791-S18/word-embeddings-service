@@ -80,7 +80,7 @@ if __name__ == '__main__':
     formatter = logging.Formatter(
         "[%(asctime)s] {%(pathname)s} %(levelname)s - %(message)s]"
     )
-    logFileName = 'log_{}.log'.format(datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H_%M'))
+    logFileName = 'logs/{}.log'.format(datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H_%M'))
     handler = RotatingFileHandler(logFileName, maxBytes=10000000)
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
