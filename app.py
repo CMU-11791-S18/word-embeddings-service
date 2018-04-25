@@ -78,11 +78,9 @@ def get_sentence_similarity():
     try:
         # app.logger.info(request.method, request.path, request.args)
         data = request.data
-        print(data)
         dataJson = json.loads(data)
         s1 = dataJson['s1']
         s2 = dataJson['s2']
-        print(s1, s2)
         return Response(SimilarityService.get_sentence_similarity_matrix(s1, s2),
                         status=200,
                         content_type='application/json')
