@@ -10,8 +10,12 @@ from SimilarityService import SimilarityService
 
 
 app = Flask(__name__)
+formatter = logging.Formatter(
+        "[%(levelname)s - %(message)s]"
+)
 logFileName = 'logs/{}.log'.format(datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H_%M'))
 handler = RotatingFileHandler(logFileName, maxBytes=10000000)
+handler.setFormatter(formatter)
 handler.setLevel(logging.DEBUG)
 app.logger.addHandler(handler)
 log = logging.getLogger('werkzeug')
@@ -72,7 +76,7 @@ def get_word_to_word_similarity():
 @app.route('/getSentenceSimilarityMatrix', methods=['POST'])
 def get_sentence_similarity():
     try:
-        # app.logger.info(request.method, request.path, request.args)
+        app.logger.info(request.method, request.path, request.data)
         data = request.data
         dataJson = json.loads(data)
         s1 = dataJson['s1']
@@ -83,12 +87,6 @@ def get_sentence_similarity():
     except KeyError:
         content = {'message': 'INVALID PARAMS'}
         return Response(content, status=400, content_type='application/json')
-
-
-@app.before_request
-def before_request():
-    if request.method == 'POST':
-        app.logger.info(request.method, request.path, request.get_data())
 
 
 @app.after_request
