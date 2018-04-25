@@ -91,7 +91,10 @@ def get_sentence_similarity():
 
 @app.after_request
 def after_request(response):
-    app.logger.info(request.method, request.path, request.args)
+    if request.method == 'GET':
+        app.logger.info(request.method, request.path, request.args)
+    elif request.method == 'POST':
+        app.logger.info(request.method, request.path, request.data)
     return response
 
 
