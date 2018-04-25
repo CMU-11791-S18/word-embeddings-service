@@ -76,8 +76,8 @@ def get_word_to_word_similarity():
 def get_sentence_similarity():
     try:
         # app.logger.info(request.method, request.path, request.args)
-        s1 = request.args.getlist('s1')
-        s2 = request.args.getlist('s2')
+        s1 = request.data['s1']
+        s2 = request.data['s2']
         print(s1, s2)
         return Response(SimilarityService.get_sentence_similarity_matrix(s1, s2),
                         status=200,
