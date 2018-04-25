@@ -24,5 +24,5 @@ class SimilarityService:
     @classmethod
     def get_sentence_similarity_matrix(self, s1, s2):
         m, n = len(s1), len(s2)
-        W_s1_s2 = [[self.get_word_to_word_similarity(s1[x], s2[y]) for y in range(n)] for x in range(m)]
+        W_s1_s2 = [[SimilarityService.get_word_to_word_similarity(s1[x], s2[y]) for y in range(n)] for x in range(m)]
         return W_s1_s2
