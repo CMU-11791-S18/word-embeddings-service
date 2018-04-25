@@ -89,12 +89,16 @@ def get_sentence_similarity():
         return Response(content, status=400, content_type='application/json')
 
 
+@app.before_request
+def before_request():
+    if request.method == 'POST':
+        app.logger.info(request.method, request.path, request.data)
+
+
 @app.after_request
 def after_request(response):
     if request.method == 'GET':
         app.logger.info(request.method, request.path, request.args)
-    elif request.method == 'POST':
-        app.logger.info(request.method, request.path, request.data)
     return response
 
 
