@@ -6,8 +6,8 @@ from gensim.models import KeyedVectors
 class SimilarityService:
 
     # filename = 'PubMed-w2v.bin'
-    filename = os.getenv('WORD2VEC_BINARY_FILE')
-    model = KeyedVectors.load_word2vec_format(filename, binary=True)
+    #filename = os.getenv('WORD2VEC_BINARY_FILE')
+    #model = KeyedVectors.load_word2vec_format(filename, binary=True)
 
     @classmethod
     def get_word_vector(self, word):
