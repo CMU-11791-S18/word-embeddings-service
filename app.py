@@ -72,7 +72,7 @@ def get_word_to_word_similarity():
         return Response(content, status=400, content_type='application/json')
 
 
-@app.route('/getSentenceSimilarityMatrix')
+@app.route('/getSentenceSimilarityMatrix', methods=['POST'])
 def get_sentence_similarity():
     try:
         # app.logger.info(request.method, request.path, request.args)
