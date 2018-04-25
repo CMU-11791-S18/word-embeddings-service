@@ -1,4 +1,5 @@
 import datetime
+import json
 import time
 from logging.handlers import RotatingFileHandler
 
@@ -76,8 +77,10 @@ def get_word_to_word_similarity():
 def get_sentence_similarity():
     try:
         # app.logger.info(request.method, request.path, request.args)
-        s1 = request.data['s1']
-        s2 = request.data['s2']
+        data = request.data
+        dataJson = json.loads(data)
+        s1 = dataJson['s1']
+        s2 = dataJson['s2']
         print(s1, s2)
         return Response(SimilarityService.get_sentence_similarity_matrix(s1, s2),
                         status=200,
