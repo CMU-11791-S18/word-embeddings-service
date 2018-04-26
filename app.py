@@ -19,7 +19,7 @@ print("Log file location - {}".format(logFileName))
 handler = RotatingFileHandler(logFileName, maxBytes=10000000)
 handler.setFormatter(formatter)
 handler.setLevel(logging.INFO)
-app.logger.setLevel(logging.INFO)
+app.logger.setLevel(logging.DEBUG)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.INFO)
 log.addHandler(handler)
@@ -96,7 +96,7 @@ def after_request(response):
     if request.method == 'GET':
         app.logger.info(request.method, request.path, request.args)
     elif request.method == 'POST':
-        app.logger.info(request.method, request.path, json.loads(request.data))
+        app.logger.info(request.method, request.path)
     return response
 
 
