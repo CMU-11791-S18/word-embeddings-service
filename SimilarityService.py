@@ -24,7 +24,7 @@ class SimilarityService:
             similarity = self.model.wv.similarity(first_word, second_word)
             return similarity
         except:
-            return 1.0
+            return 0.0
 
     @classmethod
     def get_sentence_similarity_matrix(self, s1, s2):
