@@ -14,6 +14,7 @@ formatter = logging.Formatter(
         "[%(levelname)s - %(message)s]"
 )
 logFileName = 'logs/{}.log'.format(datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H_%M'))
+print("Log file location - {}".format(logFileName))
 handler = RotatingFileHandler(logFileName, maxBytes=10000000)
 handler.setFormatter(formatter)
 handler.setLevel(logging.DEBUG)
