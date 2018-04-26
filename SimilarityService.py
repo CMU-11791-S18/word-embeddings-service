@@ -26,7 +26,7 @@ class SimilarityService:
             return similarity
         except:
             print("exception")
-            return 0.0
+            return 1.0
 
     @classmethod
     def get_sentence_similarity_matrix(self, s1, s2):
