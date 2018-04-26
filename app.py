@@ -66,7 +66,7 @@ def get_word_to_word_similarity():
         # app.logger.info(request.method, request.path, request.args)
         word1 = request.args.get('word1')
         word2 = request.args.get('word2')
-        return Response(SimilarityService.get_word_to_word_similarity(word1, word2),
+        return Response(str(SimilarityService.get_word_to_word_similarity(word1, word2)),
                         status=200,
                         content_type='application/json')
 
