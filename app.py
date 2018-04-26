@@ -1,9 +1,10 @@
 import datetime
 import json
 import time
+import logging
 from logging.handlers import RotatingFileHandler
 
-from flask import Flask, logging
+from flask import Flask
 from flask import Response
 from flask import request
 from SimilarityService import SimilarityService
@@ -17,11 +18,11 @@ logFileName = 'logs/{}.log'.format(datetime.datetime.fromtimestamp(time.time()).
 print("Log file location - {}".format(logFileName))
 handler = RotatingFileHandler(logFileName, maxBytes=10000000)
 handler.setFormatter(formatter)
-handler.setLevel(logging.DEBUG)
+handler.setLevel(logging.INFO)
 app.logger.addHandler(handler)
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.DEBUG)
-log.addHandler(handler)
+# log = logging.getLogger('werkzeug')
+# log.setLevel(logging.INFO)
+# log.addHandler(handler)
 
 print("Started Word Embedding service on port 80...")
 
@@ -90,11 +91,11 @@ def get_sentence_similarity():
         return Response(content, status=400, content_type='application/json')
 
 
-# @app.after_request
-# def after_request(response):
-#     if request.method == 'GET':
-#         app.logger.info(request.method, request.path, request.args)
-#     return response
+@app.after_request
+def after_request(response):
+    if request.method == 'GET':
+        app.logger.info(request.method, request.path, request.args)
+    return response
 
 
 if __name__ == '__main__':
