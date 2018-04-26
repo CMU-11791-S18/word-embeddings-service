@@ -83,7 +83,9 @@ def get_sentence_similarity():
         dataJson = json.loads(data)
         print(dataJson)
         s1 = dataJson['s1']
+        print(len(s1))
         s2 = dataJson['s2']
+        print(len(s2))
         return Response(SimilarityService.get_sentence_similarity_matrix(s1, s2),
                         status=200,
                         content_type='application/json')
