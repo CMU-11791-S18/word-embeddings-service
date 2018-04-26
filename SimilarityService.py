@@ -25,6 +25,7 @@ class SimilarityService:
             print(similarity)
             return similarity
         except:
+            print("exception")
             return 0.0
 
     @classmethod
