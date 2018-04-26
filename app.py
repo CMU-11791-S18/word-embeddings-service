@@ -90,11 +90,11 @@ def get_sentence_similarity():
         return Response(content, status=400, content_type='application/json')
 
 
-@app.after_request
-def after_request(response):
-    if request.method == 'GET':
-        app.logger.info(request.method, request.path, request.args)
-    return response
+# @app.after_request
+# def after_request(response):
+#     if request.method == 'GET':
+#         app.logger.info(request.method, request.path, request.args)
+#     return response
 
 
 if __name__ == '__main__':
