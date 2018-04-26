@@ -22,10 +22,8 @@ class SimilarityService:
     def get_word_to_word_similarity(self, first_word, second_word):
         try:
             similarity = self.model.wv.similarity(first_word, second_word)
-            print(similarity)
             return similarity
         except:
-            print("exception")
             return 1.0
 
     @classmethod
