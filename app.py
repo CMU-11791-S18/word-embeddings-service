@@ -20,10 +20,9 @@ handler = RotatingFileHandler(logFileName, maxBytes=10000000)
 handler.setFormatter(formatter)
 handler.setLevel(logging.INFO)
 app.logger.setLevel(logging.INFO)
-app.logger.addHandler(handler)
-# log = logging.getLogger('werkzeug')
-# log.setLevel(logging.INFO)
-# log.addHandler(handler)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.INFO)
+log.addHandler(handler)
 
 print("Started Word Embedding service on port 80...")
 
