@@ -15,11 +15,14 @@ formatter = logging.Formatter(
         "[%(levelname)s - %(message)s]"
 )
 logFileName = 'logs/{}.log'.format(datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H_%M'))
+
 print("Log file location - {}".format(logFileName))
+
 handler = RotatingFileHandler(logFileName, maxBytes=10000000)
 handler.setFormatter(formatter)
 handler.setLevel(logging.INFO)
 app.logger.setLevel(logging.DEBUG)
+
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.INFO)
 log.addHandler(handler)
@@ -27,12 +30,12 @@ log.addHandler(handler)
 print("Started Word Embedding service on port 80...")
 
 
-@app.route('/getWordVector')
-def get_word_embeddings():
+@app.route('/<embedding>/getWordVector')
+def get_word_embeddings(embedding):
     try:
         # app.logger.info(request.method, request.path, request.args)
         word = request.args.get('word')
-        return Response(SimilarityService.get_word_vector(word),
+        return Response(SimilarityService.get_word_vector(embedding, word),
                         status=200,
                         content_type='application/json')
     except KeyError:
@@ -40,8 +43,8 @@ def get_word_embeddings():
         return Response(content, status=400, content_type='application/json')
 
 
-@app.route('/getSimilarWordEmbeddings')
-def get_similar_word_embeddings():
+@app.route('/<embedding>/getSimilarWordEmbeddings')
+def get_similar_word_embeddings(embedding):
     try:
         # app.logger.info(request.method, request.path, request.args)
         positive_words = request.args.get('positive_words').split(',')
@@ -51,7 +54,7 @@ def get_similar_word_embeddings():
             negative_words = request.args.get('negative_words').split(',')
         if request.args.get('topn') is not None:
             topn = int(request.args.get('topn'))
-        return Response(SimilarityService.get_similar_word_embeddings(positive_words, negative_words, topn),
+        return Response(SimilarityService.get_similar_word_embeddings(embedding, positive_words, negative_words, topn),
                         status=200,
                         content_type='application/json')
 
@@ -60,13 +63,13 @@ def get_similar_word_embeddings():
         return Response(content, status=400, content_type='application/json')
 
 
-@app.route('/getWordToWordSimilarity')
-def get_word_to_word_similarity():
+@app.route('/<embedding>/getWordToWordSimilarity')
+def get_word_to_word_similarity(embedding):
     try:
         # app.logger.info(request.method, request.path, request.args)
         word1 = request.args.get('word1')
         word2 = request.args.get('word2')
-        return Response(SimilarityService.get_word_to_word_similarity(word1, word2),
+        return Response(SimilarityService.get_word_to_word_similarity(embedding, word1, word2),
                         status=200,
                         content_type='application/json')
 
@@ -75,15 +78,15 @@ def get_word_to_word_similarity():
         return Response(content, status=400, content_type='application/json')
 
 
-@app.route('/getSentenceSimilarityMatrix', methods=['POST'])
-def get_sentence_similarity():
+@app.route('/<embedding>/getSentenceSimilarityMatrix', methods=['POST'])
+def get_sentence_similarity(embedding):
     try:
         # app.logger.info(request.method, request.path, data)
         data = request.data
         dataJson = json.loads(data)
         s1 = dataJson['s1']
         s2 = dataJson['s2']
-        return Response(SimilarityService.get_sentence_similarity_matrix(s1, s2),
+        return Response(SimilarityService.get_sentence_similarity_matrix(embedding, s1, s2),
                         status=200,
                         content_type='application/json')
     except KeyError:

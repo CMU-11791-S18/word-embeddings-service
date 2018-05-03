@@ -1,33 +1,20 @@
-import json
-import os
-
-from gensim.models import KeyedVectors
+from WordEmbeddingFactory import WordEmbeddingFactory
 
 
 class SimilarityService:
 
-    # filename = 'PubMed-w2v.bin'
-    filename = os.getenv('WORD2VEC_BINARY_FILE')
-    model = KeyedVectors.load_word2vec_format(filename, binary=True)
+    @classmethod
+    def get_word_vector(cls, embedding, word):
+        return WordEmbeddingFactory.get_model(embedding=embedding).get_word_vector(word=word)
 
     @classmethod
-    def get_word_vector(self, word):
-        return str(self.model[word])
+    def get_similar_word_embeddings(cls, embedding, positive_words, negative_words, topn = 1):
+        return WordEmbeddingFactory.get_model(embedding=embedding).get_similar_word_embeddings(positive_words=positive_words, negative_words=negative_words, topn=topn)
 
     @classmethod
-    def get_similar_word_embeddings(self, positive_words, negative_words, topn = 1):
-        return str(self.model.most_similar(positive=positive_words, negative=negative_words, topn=topn))
+    def get_word_to_word_similarity(cls, embedding, first_word, second_word):
+        return WordEmbeddingFactory.get_model(embedding=embedding).get_word_to_word_similarity(first_word=first_word, second_word=second_word)
 
     @classmethod
-    def get_word_to_word_similarity(self, first_word, second_word):
-        try:
-            similarity = self.model.wv.similarity(first_word, second_word)
-            return similarity
-        except:
-            return 0.0
-
-    @classmethod
-    def get_sentence_similarity_matrix(self, s1, s2):
-        m, n = len(s1), len(s2)
-        W_s1_s2 = [[SimilarityService.get_word_to_word_similarity(s1[x], s2[y]) for y in range(n)] for x in range(m)]
-        return json.dumps(W_s1_s2)
+    def get_sentence_similarity_matrix(cls, embedding, s1, s2):
+        return WordEmbeddingFactory.get_model(embedding=embedding).get_sentence_similarity(s1=s1, s2=s2)
